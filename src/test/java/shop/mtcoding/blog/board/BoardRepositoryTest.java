@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.board;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
-    public void delete(){
+    public void delete_test(){
         // given
         int id = 1;
 
@@ -29,7 +30,7 @@ public class BoardRepositoryTest {
     }
 
     @Test
-    public void update(){
+    public void update_test(){
         // given
         String title = "제목10";
         String content = "내용10";
