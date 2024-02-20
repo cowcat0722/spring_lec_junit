@@ -13,15 +13,30 @@ import java.util.List;
 public class BoardRepository {
     private final EntityManager em;
 
+    @Transactional
+    public void delete(int id) {
+        Query query = em.createNativeQuery("delete from board_tb where id = ?");
+        query.setParameter(1,id);
+
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void update(String title, String content, String author, int id) {
+        Query query = em.createNativeQuery("update board_tb set title=?, content=?, author=? where id = ?");
+        query.setParameter(1,title);
+        query.setParameter(2,content);
+        query.setParameter(3,author);
+        query.setParameter(4,id);
+
+        query.executeUpdate();
+    }
+
     public List<Board> selectAll() {
         Query query = em.createNativeQuery("select * from board_tb ", Board.class);
 
-        try {
-            List<Board> board = (List<Board>) query.getResultList();
-            return board;
-        } catch (Exception e) {
-            return null;
-        }
+        List<Board> boardList = (List<Board>) query.getResultList(); // 못찾으면 빈 컬렉션을 준다 (크기 = 0)
+        return boardList;
     }
 
     public Board selectOne(int id) {

@@ -16,17 +16,50 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
+    public void delete(){
+        // given
+        int id = 1;
+
+        // when
+        boardRepository.delete(id);
+
+        // then
+        List<Board> boardList = boardRepository.selectAll();
+        Assertions.assertThat(boardList.size()).isEqualTo(7);
+    }
+
+    @Test
+    public void update(){
+        // given
+        String title = "제목10";
+        String content = "내용10";
+        String author = "이순신";
+        int id = 1;
+
+        // when
+        boardRepository.update(title,content,author,id);
+
+        // then
+        Board board = boardRepository.selectOne(id);
+//        System.out.println(board);
+        Assertions.assertThat(board.getTitle()).isEqualTo(title);
+        Assertions.assertThat(board.getContent()).isEqualTo(content);
+        Assertions.assertThat(board.getAuthor()).isEqualTo(author);
+    }
+
+    @Test
     public void selectAll_test(){
         // given
 
         // when
-        List<Board> board = boardRepository.selectAll();
+        List<Board> boardList = boardRepository.selectAll();
 
         // then (상태 검사)
-//        System.out.println(board);
-        Assertions.assertThat(board.get(0).getTitle()).isEqualTo("제목1");
-        Assertions.assertThat(board.get(0).getContent()).isEqualTo("내용1");
-        Assertions.assertThat(board.get(0).getAuthor()).isEqualTo("홍길동");
+//        System.out.println(boardList);
+        Assertions.assertThat(boardList.get(0).getTitle()).isEqualTo("제목1");
+        Assertions.assertThat(boardList.get(0).getContent()).isEqualTo("내용1");
+        Assertions.assertThat(boardList.get(0).getAuthor()).isEqualTo("홍길동");
+        Assertions.assertThat(boardList.size()).isEqualTo(8);
     }
 
     @Test
